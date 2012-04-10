@@ -1,0 +1,117 @@
+\documentclass{article}
+\usepackage{a4wide}
+\title{Assignment 3}
+\begin{document}
+\author{Cupak Miroslav,\\
+        David Nemecek,\\
+		Nizan Juraj, \\
+		Streck Adam}
+\maketitle
+
+\section{Concept}
+We want to build a robot capable of:
+\begin {enumerate}
+\item Calibrating its track and light detection sensor.
+\item Reading instructions in some graphical represenatation while riding over them.
+\item Visible execution of those instructions.
+\end {enumerate}
+
+\section{Design}
+
+\subsection{Hardware}
+For self-calibration of the position is best to use three wheel vehicle with signe free wheel in the front and two wheels with independent motors in the back (sort of the thing that is built right now). \\
+However, I think that 4-wheel vehicle with single motor for movement and second one for steering will be better for execution of instructions and overall more awesome, so I suggest building that one - there is a howto for one pretty, I would build on that: \verb+http://www.nxtprograms.com/NXT2/race_car/steps.html+ .
+
+\subsection{Input}
+We have two sensors so I would reccomend using two paralel lines of instructions that are printed on the paper - it is simple, transportable and we can make programs of any lenght using a glue ;).
+
+\subsection{Behaviour}
+There are four basic things such a robot could do:
+\begin{enumerate}
+\item Move and steer.
+\item Make sounds.
+\item Draw on LCD of the NTX brick.
+\item Use third motor to do something.
+\end{enumerate}
+I would pick two of them - move and make sounds, unless movement is too loud for sound to be audible, I will fruthemore explain how to utilize them.
+
+\section{Coding}
+
+\subsection{Code representation}
+I see two ways how to make coding (I already nicknamed the language \emph{GreyDot}, do you agree?):
+\begin{itemize}
+\item Use scale for gray with 10 steps.
+\item Use triples of black (0) and gray (1).
+\end{itemize}
+First option would be better, but we need to test if we can always calibrate the sensor so it reads correct instructions no matter what light conditions are - but it should work, when I tested it, it was pretty sharp. In this case we have 9 steps for different instructions and 1 for background. \\
+Second option uses only three steps - black for 0, grey for 1 and white for background and I am pretty positive that this option would work even without self calibration. We would than have 8 combinations.
+
+\subsection{Semantics}
+I would use this two sets of instructions:
+\begin{itemize}
+\item Movement
+\begin{enumerate}
+\item Move forward straight.
+\item Move forward left to make 30° turn.
+\item Move forward right to make 30° turn.
+\item Move backward straight.
+\item Move backward left to make 30° turn.
+\item Move backward right to make 30° turn.
+\item Stay / Stop.
+\end{enumerate}
+\item Sound
+\begin{enumerate}
+\item Beep note A for 1/3 of period.
+\item Beep note A for 2/3 of period.
+\item Beep note A for 3/3 of period.
+\item Beep note B for 1/3 of period.
+\item Beep note B for 2/3 of period.
+\item Beep note B for 3/3 of period.
+\item Be silent.
+\end{enumerate}
+\end{itemize}
+One line of instructions would be for movement only, the other one would be for sound only. \\
+After reading instructions our robot would always execute both instructions at once for a fixed period of time. \\
+
+\subsection{Writing instructions}
+I would write instructions in simple ASCII file and then have some script plot it. \\
+I would recomment using two lines - first for movement with numbers of instructions of some symbolic representation - < for steer left etc. \\
+
+\subsection{Example}
+Using only numbers of instructions following code:
+\begin{verbatim}
+222222
+363636
+\end{verbatim}
+would make a circling firetruck :)
+
+\subsection{Special symbols}
+There is at leas one symbol left for each line - these will be used as special symbols - for now we may need these symbols:
+\begin{enumerate}
+\item maybe - Start color calibration (should be black-black).
+\item maybe - Start path calibration.
+\item sure - Start reading instructions.
+\item sure - End reading instructions and execute.
+\end{enumerate}
+
+\section{Calibration}
+We need to do following two calibrations, I am no sure in which ordering and if they start automatically or based on instructions.
+
+\subsection{Movement}
+We need to calibrate movement so when our robot starts reading instructions it goes straight - this must be precise. \\
+For this we will need at least two-papers long lines.
+
+\subsection{Light}
+To assure correctness of reading we need to set low and high value of the light input - there must be at least a bit of white and bit of black space on the paper.
+
+\subsection{Errors}
+It still might happen that our robot goes out of the line before the end - I suggest to use timeout - if there is no new instruction on the input within given time, robot stops.
+
+\section{Code}
+
+\subsection{Architecture}
+Calibration, reading and execution are independent parts so I would keep them that way in the code - they can be even created independently, which seems like an OK idea to me. \\
+On the other hand I would suggest using common conventions for syntax.
+
+
+\end{document}
