@@ -1,0 +1,19 @@
+\subsection{Code representation}
+How do you encode instructions? What are adventeges and disadvanteges of this representations? How is it read? Do you use some special symbols?
+
+I see two ways how to make coding (I already nicknamed the language \emph{GreyDot}, do you agree?):
+\begin{itemize}
+\item Use scale for gray with 10 steps.
+\item Use triples of black (0) and gray (1).
+\end{itemize}
+First option would be better, but we need to test if we can always calibrate the sensor so it reads correct instructions no matter what light conditions are - but it should work, when I tested it, it was pretty sharp. In this case we have 9 steps for different instructions and 1 for background. \\
+Second option uses only three steps - black for 0, grey for 1 and white for background and I am pretty positive that this option would work even without self calibration. We would than have 8 combinations.
+
+\subsection{Special symbols}
+There is at leas one symbol left for each line - these will be used as special symbols - for now we may need these symbols:
+\begin{enumerate}
+\item maybe - Start color calibration (should be black-black).
+\item maybe - Start path calibration.
+\item sure - Start reading instructions.
+\item sure - End reading instructions and execute.
+\end{enumerate}
