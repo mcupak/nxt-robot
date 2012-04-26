@@ -130,5 +130,10 @@ public class MotorController
 
 	public void setSpeed(int speed) {
 		this.speed = speed;
+		// update?
+		if (motorB != null && motorC != null) {
+			motorB.setPower(speed);
+			motorC.setPower(speed);
+		}
 	}
 }

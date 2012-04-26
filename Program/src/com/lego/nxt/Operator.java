@@ -17,22 +17,28 @@ public class Operator {
 	 */
 	public static void main(String[] args) {
 		// wait for start
-		DisplayController.print("Press any key to start...");
+		DisplayController.print("Press ENTER to start...");
 		Learner learner = new Learner();
 		Button.waitForAnyPress();
 		
 		learner.calibrate();
 		learner.run();
-		DisplayController.print(Operator.getInstructionsAsString());
+		DisplayController.print(Operator.getInstructionsAsString() + "     Pres ENTER to execute.");
 		Button.ENTER.waitForPressAndRelease();
 		
-		/*try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		Executor executor = new Executor(instructions);
+		
+		try {
+			executor.run();
+		} catch (Exception e) {
+			DisplayController.print("Program exception: " + e.getMessage());
+			Button.ENTER.waitForPressAndRelease();
+		}
 		/**/
+		
+		DisplayController.print("Program finished" + "Pres ENTER to end.");
+		Button.ENTER.waitForPressAndRelease();
+		
 		System.exit(0);
 	}
 
@@ -47,7 +53,7 @@ public class Operator {
 	public static String getInstructionsAsString()
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append("Instructions: ");
+		sb.append("Instructions:   ");
 		for (int i = 0; i < instructions.size(); i++) {
 			sb.append(instructions.get(i).getValue());
 		}

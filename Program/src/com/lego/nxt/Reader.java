@@ -118,7 +118,7 @@ public class Reader extends Thread
 			
 			// sleep a bit
 			try {
-				Thread.sleep(40);
+				Thread.sleep(20);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
