@@ -2,7 +2,22 @@ package com.lego.nxt;
 
 import lejos.nxt.Button;
 import lejos.nxt.SensorPort;
+import lejos.nxt.Sound;
 
+/**
+ * Learner program state.
+ * 
+ * Corresponds to the phase when the robot is following the guiding line and
+ * reading instructions from the data line.
+ * 
+ * This is the main controlling thread responsible for coordinating all the
+ * motors and light sensors. It runs a Reader thread in parallel to read and
+ * decode the instructions.
+ * 
+ * @author mcupak
+ * @author Dejvino
+ *
+ */
 public class Learner {
 	// controller for motors
 	private MotorController mc;
@@ -11,8 +26,9 @@ public class Learner {
 	private LightController readingLight;
 	// time to find something useful on the ground in ms
 	public static final int TIMEOUT_FIND = 5000;
-	public static final int TIMEOUT_READ = 20000;
 
+	public static final boolean DATALINE_ON_LEFT = true;
+	
 	public Learner() {
 		mc = MotorController.getInstance();
 	}
@@ -54,6 +70,10 @@ public class Learner {
 		navigationLight.setThresholdBlack((black + dark) / 2);
 
 		// calibrate reading light
+		white += 0;
+		grey += 0;
+		dark += 5;
+		black += 7;
 		readingLight = new LightController(SensorPort.S3);
 		readingLight.start();
 		readingLight.setThresholdGrey((white + grey) / 2);
@@ -104,24 +124,24 @@ public class Learner {
 	/**
 	 * Line follower and reader.
 	 * 
+	 * The actual code follows the guiding line and waits for the Reader to
+	 * terminate, which indicates that the learning process finished.
+	 * 
 	 * @return true when finished by reading the end mark, false in case of
 	 *         timeout
 	 */
 	public Boolean follow() {
 		DisplayController.print("Reading...");
-
+		
 		Color color = Color.BLACK;
 		int colorReading = 0;
 		int direction = 0;
-		long end = System.currentTimeMillis() + TIMEOUT_READ;
-		long time = System.currentTimeMillis();
 
 		Reader reader = new Reader(readingLight);
 		reader.start();
 
 		mc.forward();
-		while ((time < end) && (!Button.ESCAPE.isPressed())
-				&& (reader.isAlive())) {
+		while ((!Button.ESCAPE.isPressed()) && (reader.isAlive())) {
 			color = navigationLight.getColor();
 			colorReading = navigationLight.getReading();
 			boolean changeDir = false;
@@ -145,47 +165,47 @@ public class Learner {
 					changeDir = true;
 				}
 				break;
-			//case DARK:
 			default:
-				/*if (direction != 1) {
-					direction = 1;
-					changeDir = true;
-				}
-				break;*/
 			}
 			if (changeDir) {
-				DisplayController.print("DIR: "+direction+"\nColor: "+color+" ("+colorReading+")");
+				//DisplayController.print("DIR: "+direction+"\nColor: "+color+" ("+colorReading+")");
 				if (mc.isMoving()) {
 					mc.stop();
 				}
-				mc.setDirection(direction);
+				if (DATALINE_ON_LEFT) {
+					mc.setDirection(-direction);
+				} else {
+					mc.setDirection(direction);
+				}
 				try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
+					DisplayController.print("Interrupted 567");
+					Button.ENTER.waitForPressAndRelease();
 				}
 				mc.forward();
 			}
-			
-			time = System.currentTimeMillis();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+				DisplayController.print("Interrupted 569");
+				Button.ENTER.waitForPressAndRelease();
+			}
 		}
 
 		// clean up
 		mc.stop();
 		mc.setDirection(0);
 
-		DisplayController.print("Learner finished.");
-		Button.ENTER.waitForPressAndRelease();
-		System.exit(0);
+		//DisplayController.print("Learner finished.");
+		//Button.ENTER.waitForPressAndRelease();
+		//System.exit(0);
 		
 		navigationLight.interrupt();
 		readingLight.interrupt();
 
-		// read end mark
-		if (reader.isAlive()) {
-			reader.interrupt();
-			return false;
-		}
 		return true;
 	}
 }

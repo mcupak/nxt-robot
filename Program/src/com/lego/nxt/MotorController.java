@@ -13,8 +13,11 @@ import lejos.robotics.DCMotor;
  * @author mcupak
  *
  */
-public class MotorController {
-	private int speed=35;
+public class MotorController
+{
+	private int speed=20;
+	private static int STEERING_SPEED = 25;
+	
 	private static MotorController instance = null;
 
 	// motor in the front
@@ -54,7 +57,7 @@ public class MotorController {
 		MotorPort portC = MotorPort.getInstance(2);
 		motorC = new NXTMotor(portC);
 		motorC.stop();
-		steeringMotor.setPower(40);
+		steeringMotor.setPower(STEERING_SPEED);
 		motorB.setPower(speed);
 		motorC.setPower(speed);
 	}
@@ -72,8 +75,10 @@ public class MotorController {
 	}
 
 	public void stop() {
-		motorB.stop();
-		motorC.stop();
+		//motorB.stop();
+		//motorC.stop();
+		motorB.flt();
+		motorC.flt();
 		moving = false;
 	}
 
