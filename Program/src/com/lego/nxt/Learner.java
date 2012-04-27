@@ -70,10 +70,10 @@ public class Learner {
 		navigationLight.setThresholdBlack((black + dark) / 2);
 
 		// calibrate reading light
-		white += 0;
-		grey += 0;
-		dark += 5;
-		black += 7;
+		white += 2;
+		grey += 3;
+		dark += 7;
+		black += 8;
 		readingLight = new LightController(SensorPort.S3);
 		readingLight.start();
 		readingLight.setThresholdGrey((white + grey) / 2);
@@ -140,7 +140,22 @@ public class Learner {
 		Reader reader = new Reader(readingLight);
 		reader.start();
 
+		// ignore the beginning (so we start with a real color)
+		try {
+			for (int i = 0; i < 10; i++) {
+				Thread.sleep(10);
+				navigationLight.getColor();
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			DisplayController.print("Interrupted 135");
+			Button.ENTER.waitForPressAndRelease();
+		}
+		/**/
+		
 		mc.forward();
+		reader.setReadEnabled(true);
 		while ((!Button.ESCAPE.isPressed()) && (reader.isAlive())) {
 			color = navigationLight.getColor();
 			colorReading = navigationLight.getReading();
@@ -171,6 +186,7 @@ public class Learner {
 				//DisplayController.print("DIR: "+direction+"\nColor: "+color+" ("+colorReading+")");
 				if (mc.isMoving()) {
 					mc.stop();
+					reader.setReadEnabled(false);
 				}
 				if (DATALINE_ON_LEFT) {
 					mc.setDirection(-direction);
@@ -185,6 +201,7 @@ public class Learner {
 					Button.ENTER.waitForPressAndRelease();
 				}
 				mc.forward();
+				reader.setReadEnabled(true);
 			}
 			try {
 				Thread.sleep(100);

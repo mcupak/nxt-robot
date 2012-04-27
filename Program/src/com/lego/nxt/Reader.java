@@ -51,6 +51,16 @@ public class Reader extends Thread
 		this.light = light;
 	}
 
+	private boolean readEnabled;
+	
+	public synchronized void setReadEnabled(boolean readEnabled) {
+		this.readEnabled = readEnabled;
+	}
+	
+	public synchronized boolean isReadEnabled() {
+		return readEnabled;
+	}
+	
 	@Override
 	public void run()
 	{
@@ -62,7 +72,7 @@ public class Reader extends Thread
 		
 		// ignore the beginning (so we start with white color)
 		try {
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < 15; i++) {
 				Thread.sleep(10);
 				light.getColor();
 			}
@@ -80,7 +90,9 @@ public class Reader extends Thread
 		lastMax=current=Color.WHITE;
 		do {
 			// read color
-			current = light.getColor();
+			if (isReadEnabled()) {
+				current = light.getColor();
+			}
 			
 			// fix collor
 			if (current == Color.GREY) {
