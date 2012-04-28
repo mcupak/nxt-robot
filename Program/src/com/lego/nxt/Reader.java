@@ -68,7 +68,6 @@ public class Reader extends Thread
 
 		BitSet bits = new BitSet();
 		int bitNumber = 0;
-		int testnum = 0;
 		
 		// ignore the beginning (so we start with white color)
 		try {
@@ -100,8 +99,8 @@ public class Reader extends Thread
 			}
 			
 			//DisplayController.print("Scanned color: "+current);
-			Sound.playTone(current == Color.WHITE ? 100 : (
-					current == Color.DARK ? 300 : 500) , 10);
+			//Sound.playTone(current == Color.WHITE ? 100 : (
+			//		current == Color.DARK ? 300 : 500) , 10);
 			
 			if (lastMax == current && current == Color.WHITE) {
 				// waiting for a new signal
@@ -111,13 +110,9 @@ public class Reader extends Thread
 					// scanning ended - save the new value
 					bits.set(bitNumber, lastMax == Color.BLACK);
 					bitNumber++;
-					// show current data
-					testnum *= 2;
-					testnum += lastMax == Color.BLACK ? 1 : 0;
-					DisplayController.print("Number: "+testnum);
 					// signal the value
-					//Sound.playTone(lastMax == Color.BLACK ? 420 : 220, 300);
-					//DisplayController.print("Scanned color "+bits.length()+" = " + lastMax);
+					Sound.playTone(lastMax == Color.BLACK ? 420 : 220, 100);
+					DisplayController.print("Scanned value "+bitNumber+" = " + (lastMax == Color.BLACK));
 					// reset the max value
 					lastMax = Color.WHITE;
 					// reset the timeout

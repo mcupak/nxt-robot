@@ -193,13 +193,13 @@ public class Learner {
 				} else {
 					mc.setDirection(direction);
 				}
-				try {
+				/*try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 					DisplayController.print("Interrupted 567");
 					Button.ENTER.waitForPressAndRelease();
-				}
+				}*/
 				mc.forward();
 				reader.setReadEnabled(true);
 			}

@@ -3,7 +3,9 @@ package com.lego.nxt;
 import lejos.nxt.Motor;
 import lejos.nxt.MotorPort;
 import lejos.nxt.NXTMotor;
+import lejos.nxt.NXTRegulatedMotor;
 import lejos.robotics.DCMotor;
+import lejos.robotics.RegulatedMotor;
 
 /**
  * Controller of the motors.
@@ -16,12 +18,12 @@ import lejos.robotics.DCMotor;
 public class MotorController
 {
 	private int speed=20;
-	private static int STEERING_SPEED = 25;
+	private static int STEERING_SPEED = 80;
 	
 	private static MotorController instance = null;
 
 	// motor in the front
-	private DCMotor steeringMotor = null;
+	private RegulatedMotor steeringMotor = null;
 
 	// motors in the back:
 	// left motor:
@@ -49,7 +51,7 @@ public class MotorController
 
 	private void init() {
 		MotorPort portA = MotorPort.getInstance(0);
-		steeringMotor = new NXTMotor(portA);
+		steeringMotor = new NXTRegulatedMotor(portA);
 		steeringMotor.stop();
 		MotorPort portB = MotorPort.getInstance(1);
 		motorB = new NXTMotor(portB);
@@ -57,7 +59,7 @@ public class MotorController
 		MotorPort portC = MotorPort.getInstance(2);
 		motorC = new NXTMotor(portC);
 		motorC.stop();
-		steeringMotor.setPower(STEERING_SPEED);
+		steeringMotor.setSpeed(STEERING_SPEED);
 		motorB.setPower(speed);
 		motorC.setPower(speed);
 	}
@@ -98,7 +100,7 @@ public class MotorController
 		}
 		int diff = d - direction;
 		direction = d;
-		steer(diff * 200);
+		steer(diff);
 	}
 
 	public Boolean isMoving() {
@@ -107,21 +109,7 @@ public class MotorController
 	}
 
 	private void steer(int q) {
-		if (q > 0) {
-			// right
-			steeringMotor.backward();
-		} else {
-			// left
-			q = -q;
-			steeringMotor.forward();
-		}
-
-		try {
-			Thread.sleep(q);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		steeringMotor.stop();
+		steeringMotor.rotate(q * (-15));
 	}
 
 	public int getSpeed() {
