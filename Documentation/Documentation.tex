@@ -2,7 +2,7 @@
 \usepackage{a4wide}
 \usepackage{graphicx}
 
-\title{Assignment 3}
+\title{IA158 Real Time Systems, Assignment 3 \\ Documentation}
 \begin{document}
 \author{Cupak Miroslav,\\
 		Nizan Juraj, \\
@@ -10,39 +10,12 @@
 		Streck Adam}
 \maketitle
 
-\section{Concept}
-We want to build a robot capable of:
-\begin {enumerate}
-\item Calibrating its track and light detection sensor.
-\item Reading instructions in some graphical represenatation while riding over them.
-\item Visible execution of those instructions.
-\end {enumerate}
+\section{Introduction}
+We have decided to create an interpret - robot capable of reading graphical instructions and later executing them. As a hardware, we have picked four-wheel car with two light sensor, one that reads movement line and ensures that robot stays on its path and second one for instructions. Using our instruction set, one can make the car move in different directions or make sounds. Each instruction corresponds to a four bit number (we call such number byte), that is encoded using four colored stripes, each representing on or off bit. 
 
-\section{Design}
+\input{Construction.tex}
 
-\subsection{Behaviour}
-There are four basic things such a robot could do:
-\begin{enumerate}
-\item Move and steer.
-\item Make sounds.
-\item Draw on LCD of the NTX brick.
-\item Use third motor to do something.
-\end{enumerate}
-I would pick two of them - move and make sounds, unless movement is too loud for sound to be audible, I will fruthemore explain how to utilize them.
-
-\input{Juro_construction.tex}
-
-\input{Juro_movement.tex}
-
-\input{Juro_calibration.tex}
-
-\section{Coding}
-
-\input{Miro_encoding.tex}
-
-\input{Miro_plotting.tex}
-
-\input{Miro_movement.tex}
+\input{Movement.tex}
 
 \input{Dejv_reading.tex}
 

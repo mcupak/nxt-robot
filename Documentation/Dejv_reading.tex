@@ -1,11 +1,11 @@
-\subsection{Reading data}
+\section{Reading data}
 Although in the beginning it seemed as a simple task, reading the data
 from the data-line turned out to be quite tricky. One would expect that
 when the light sensor moves from a white region onto a black region,
 it would result in a few readings of WHITE and then BLACK values. Instead
 it results in WHITE - GREY - DARK GREY - BLACK values.
 
-\subsubsection{Data encoding}
+\subsection{Data encoding}
 Because the light sensor is basically an analog input device, the outgoing
 values have to be treated that way - as an analog signal. And as the device
 is not that sensitive, we decided (for the sake of reliability) to reduce
@@ -26,7 +26,7 @@ elements (changes).
 \caption{Light sensor readings}
 \end{figure}
 
-\subsubsection{Various details}
+\subsection{Various details}
 After testing a few layouts and configurations we found that the best
 results are achieved with \textit{data} stripes 2~cm thick and
 \textit{synchronization} spaces about 3~cm thick. Thin stripes
@@ -43,7 +43,7 @@ data-line is not moving strictly in one direction. The master thread
 therefore signals the slave thread when it is safe to read data values
 (i.e. the robot is moving forward).
 
-\subsubsection{Error handling}
+\subsection{Error handling}
 To make the encoding as simple as possible, we implemented a
 timeout-based reading termination to avoid control sequences in the data
 flow. Every successfully read bit resets the timer, otherwise after

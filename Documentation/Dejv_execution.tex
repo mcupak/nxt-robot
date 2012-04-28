@@ -1,4 +1,4 @@
-\subsection{Instructions execution}
+\section{Instructions execution}
 The final phase of the robot's program aims to interpret the newly decoded
 binary data. This works as expected: the instruction interpreter sets its
 Program Counter (PC) to the first data \textit{byte} (i.e. 2-bit value)
@@ -7,7 +7,7 @@ process until it moves out of the array of instructions. Every
 instruction moves the PC one \textit{byte} further, instructions have
 access to the PC and can (theoretically) alter it to perform loops.
 
-\subsubsection{Instruction set}
+\subsection{Instruction set}
 Although it would be possible to prepare a "Turing-complete" set
 of instructions, our goal was to showcase that the robot does what it is
 told using only a few bytes.
