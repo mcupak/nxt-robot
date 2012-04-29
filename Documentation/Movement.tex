@@ -1,6 +1,6 @@
 \section{Movement calibration}
 To ensure continuous reading of the instructions without possible errors caused by incorrect starting direction, we used a trace - two lines, one with grey and one with black colour. While on the trace he continues forward. When the white color is reached, he returns on the trace depending on the last color he saw before white - if it was gray, he turns right, if black, he turns left. 
 
-Reading of the instructions is given by a short timeout within which no new bit is read. To ensure that movement calibration during reading does not cause this timeout to expire, line following thread pauses the data reading thread for the time in which it stops, steers and starts moving again.
+Instructions reading is ended by a short timeout within which no new bit is read. To ensure that movement calibration does not cause this timeout to expire, line following thread pauses the data reading thread for the time in which the car stops, steers and starts moving again.
 
 Robot does not start reading instructions until it finds an initial line. If he is not able to find the trace or if he loses it during the computation, an exception is thrown and robot stops moving.
