@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.3.15)  28 APR 2012 21:49
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.3.15)  29 APR 2012 22:44
 entering extended mode
 **Documentation.tex
 
@@ -110,34 +110,39 @@ on.tex")
 ("D:\ŠKOLA\IA158 Real Time Systems\IA158-Assignment-3\Documentation\Movement.t
 ex")
 ("D:\ŠKOLA\IA158 Real Time Systems\IA158-Assignment-3\Documentation\Dejv_readi
-ng.tex" <light_signal.pdf, id=1, 541.02126pt x 284.06125pt>
-File: light_signal.pdf Graphic file (type pdf)
+ng.tex" [1
 
-<use light_signal.pdf>
+{C:/Users/Asan/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+<light_signal.pdf, id=9, 541.02126pt x 284.06125pt>
+File: light_signal.pdf Graphic file (type pdf)
+ <use light_signal.pdf>
 Package pdftex.def Info: light_signal.pdf used on input line 25.
 (pdftex.def)             Requested size: 424.58624pt x 222.9322pt.
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[1
-
-{C:/Users/Asan/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}])
+[2 <D:/ŠKOLA/IA158 Real Time Systems/IA158-Assignment-3/Documentation/light_si
+gnal.pdf>])
 ("D:\ŠKOLA\IA158 Real Time Systems\IA158-Assignment-3\Documentation\Dejv_execu
-tion.tex" [2 <D:/ŠKOLA/IA158 Real Time Systems/IA158-Assignment-3/Documentatio
-n/light_signal.pdf>]
+tion.tex"
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 19.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 19.
-) [3]
+)
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 26.
+ ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\omscmr.fd"
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 26.
+
+[3]
 ("D:\ŠKOLA\IA158 Real Time Systems\IA158-Assignment-3\Documentation\Documentat
 ion.aux") ) 
 Here is how much of TeX's memory you used:
- 1162 strings out of 494045
- 16508 string characters out of 3145972
- 66904 words of memory out of 3000000
- 4475 multiletter control sequences out of 15000+200000
+ 1179 strings out of 494045
+ 16808 string characters out of 3145972
+ 68904 words of memory out of 3000000
+ 4489 multiletter control sequences out of 15000+200000
  8241 words of font info for 29 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
  27i,6n,19p,555b,209s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -147,10 +152,11 @@ bx10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx
 .pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pf
 b><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><
 C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/
-Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on Documentation.pdf (3 pages, 121735 bytes).
+Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Pr
+ogram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on Documentation.pdf (3 pages, 130433 bytes).
 PDF statistics:
- 48 PDF objects out of 1000 (max. 8388607)
+ 52 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
