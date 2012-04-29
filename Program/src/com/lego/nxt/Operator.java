@@ -23,6 +23,13 @@ public class Operator {
 		
 		learner.calibrate();
 		learner.run();
+		
+		if (instructions.size() <= 0) {
+			DisplayController.print("Empty instruction set. FAILED.");
+			Button.ENTER.waitForPressAndRelease();
+			System.exit(1);
+		}
+		
 		DisplayController.print(Operator.getInstructionsAsString() + "     Pres ENTER to execute.");
 		Button.ENTER.waitForPressAndRelease();
 		

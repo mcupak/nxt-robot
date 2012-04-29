@@ -51,6 +51,16 @@ public class Reader extends Thread
 		this.light = light;
 	}
 
+	private boolean readEnabled;
+	
+	public synchronized void setReadEnabled(boolean readEnabled) {
+		this.readEnabled = readEnabled;
+	}
+	
+	public synchronized boolean isReadEnabled() {
+		return readEnabled;
+	}
+	
 	@Override
 	public void run()
 	{
@@ -58,11 +68,10 @@ public class Reader extends Thread
 
 		BitSet bits = new BitSet();
 		int bitNumber = 0;
-		int testnum = 0;
 		
 		// ignore the beginning (so we start with white color)
 		try {
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < 15; i++) {
 				Thread.sleep(10);
 				light.getColor();
 			}
@@ -80,7 +89,9 @@ public class Reader extends Thread
 		lastMax=current=Color.WHITE;
 		do {
 			// read color
-			current = light.getColor();
+			if (isReadEnabled()) {
+				current = light.getColor();
+			}
 			
 			// fix collor
 			if (current == Color.GREY) {
@@ -88,8 +99,8 @@ public class Reader extends Thread
 			}
 			
 			//DisplayController.print("Scanned color: "+current);
-			Sound.playTone(current == Color.WHITE ? 100 : (
-					current == Color.DARK ? 300 : 500) , 10);
+			//Sound.playTone(current == Color.WHITE ? 100 : (
+			//		current == Color.DARK ? 300 : 500) , 10);
 			
 			if (lastMax == current && current == Color.WHITE) {
 				// waiting for a new signal
@@ -99,13 +110,9 @@ public class Reader extends Thread
 					// scanning ended - save the new value
 					bits.set(bitNumber, lastMax == Color.BLACK);
 					bitNumber++;
-					// show current data
-					testnum *= 2;
-					testnum += lastMax == Color.BLACK ? 1 : 0;
-					DisplayController.print("Number: "+testnum);
 					// signal the value
-					//Sound.playTone(lastMax == Color.BLACK ? 420 : 220, 300);
-					//DisplayController.print("Scanned color "+bits.length()+" = " + lastMax);
+					Sound.playTone(lastMax == Color.BLACK ? 420 : 220, 100);
+					DisplayController.print("Scanned value "+bitNumber+" = " + (lastMax == Color.BLACK));
 					// reset the max value
 					lastMax = Color.WHITE;
 					// reset the timeout

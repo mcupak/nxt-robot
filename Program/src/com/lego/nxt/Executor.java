@@ -62,6 +62,9 @@ public class Executor
 				Button.ENTER.waitForPressAndRelease();
 			}
 		}
+		
+		// reset motors
+		motors.setDirection(0);
 	}
 	
 	/**

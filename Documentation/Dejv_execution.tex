@@ -1,2 +1,53 @@
-\subsection{Movement programming}
-How do you executed the code? How do the underlying routines look?
+\section{Instructions execution}
+The final phase of the robot's program aims to interpret the newly decoded
+binary data. This works as expected: the instruction interpreter sets its
+Program Counter (PC) to the first data \textit{byte} (i.e. 2-bit value)
+which determines what should be executed and then repeats the whole
+process until it moves out of the array of instructions. Every
+instruction moves the PC one \textit{byte} further, instructions have
+access to the PC and can (theoretically) alter it to perform loops.
+
+\subsection{Instruction set}
+Although it would be possible to prepare a "Turing-complete" set
+of instructions, our goal was to showcase that the robot does what it is
+told using only a few bytes.
+The same goes for the number of instructions - we used 2-\textit{byte}
+instructions (first its function, then its parameter), but it is
+possible to have longer / shorter / variable length instructions.
+
+\begin{center}
+\begin{tabular}{|c|c||l|}
+\hline
+\textbf{Byte 1}   &   \textbf{Byte 2}   &   \textbf{Description}\\
+\hline
+\hline
+    0   &   0       &   Go forward\\
+        &   1       &   Go forward left\\
+        &   2       &   Go forward right\\
+        &   3       &   Repeat LAI 2x\\
+\hline
+    1   &   0       &   Go back\\
+        &   1       &   Go back left\\
+        &   2       &   Go back right\\
+        &   3       &   Repeat LAI 5x\\
+\hline
+    2   &   X       &   Play tone (X+1) * 100~Hz\\
+\hline
+    3   &   X       &   Delay time (X+1) * 1000~ms\\
+ \hline
+ \end{tabular}
+\end{center}
+
+Every standard instruction is executed for 1000~ms. Sound playing
+instructions are executed in parallel and therefore take 0~ms to execute.
+
+The \textit{Repeat LAI Xx} performs the \textit{Last Action Instruction}
+$X$-times. This servers as a simple way to perform movement instructions
+multiple times using fewer data \textit{bytes}.
+
+Because every possible 2-\textit{byte} value has a meaning assigned,
+it is not possible for the user program to cause an error along the
+execution based on a wrong \textit{byte} value. However if the number
+of \textit{bytes} is not even, error occurs on the very last instruction.
+
+
